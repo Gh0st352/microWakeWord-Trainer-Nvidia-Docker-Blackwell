@@ -1,5 +1,6 @@
 # Base
 FROM nvcr.io/nvidia/tensorflow:25.02-tf2-py3
+FROM ubuntu:24.04
 
 ENV DEBIAN_FRONTEND=noninteractive
 
