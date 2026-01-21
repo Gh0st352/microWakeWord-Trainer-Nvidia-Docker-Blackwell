@@ -126,9 +126,10 @@ echo "   ===== Installing common requirements ====="
 # requirements.txt lives in repo root now
 pip_install -r "${ROOTDIR}/requirements.txt"
 
+ echo "   ===== Installing tf_keras (legacy tf.keras compatibility) ====="
+ pip_install "tf_keras==2.20.0"
  if ${GPU} ; then
      echo "   ===== Using NGC TensorFlow base (skip TF install) ====="
-     pip_install "tf_keras==2.20.0"
  else
      tfgpu=""
      echo "   ===== Installing Tensorflow${tfgpu} ====="
