@@ -1,5 +1,0 @@
-* text=auto
-.bashrc text eol=lf
-train_wake_word text eol=lf
-run_recorder.sh text eol=lf
-cli/* text eol=lf

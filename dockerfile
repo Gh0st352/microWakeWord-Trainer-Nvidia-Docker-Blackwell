@@ -1,5 +1,4 @@
 # Base
-FROM nvcr.io/nvidia/tensorflow:25.02-tf2-py3
 FROM ubuntu:24.04
 
 ENV DEBIAN_FRONTEND=noninteractive
@@ -7,7 +6,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 # System deps
 RUN apt-get update && apt-get install -y --no-install-recommends \
     python3.12 python3.12-venv python3.12-dev python3-pip python-is-python3 \
-    git wget curl unzip ca-certificates nano less \
+    git wget curl unzip ca-certificates nano less nvidia-cuda-toolkit \
  && rm -rf /var/lib/apt/lists/* \
  && mkdir -p /data
 
