@@ -69,7 +69,7 @@ START_TS=$EPOCHSECONDS
 
 export TF_CPP_MIN_LOG_LEVEL=9
 export TF_FORCE_GPU_ALLOW_GROWTH=true
-export TF_GPU_ALLOCATOR=cuda_malloc_async
+# Leave TF_GPU_ALLOCATOR unset by default for Blackwell stability
 # Blackwell + TF 2.20: avoid unsupported XLA flags (causes hard error)
 DEFAULT_XLA_FLAGS="--tf_xla_auto_jit=0"
 export TF_XLA_FLAGS="${TF_XLA_FLAGS:+${TF_XLA_FLAGS} }${DEFAULT_XLA_FLAGS}"

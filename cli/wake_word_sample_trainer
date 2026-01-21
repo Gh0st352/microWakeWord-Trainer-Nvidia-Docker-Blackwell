@@ -229,7 +229,7 @@ export TF_CPP_MIN_LOG_LEVEL="${TF_CPP_MIN_LOG_LEVEL:-2}"
 export TF_XLA_FLAGS="${TF_XLA_FLAGS:+${TF_XLA_FLAGS} }${DEFAULT_XLA_FLAGS}"
 export NVIDIA_TF32_OVERRIDE="${NVIDIA_TF32_OVERRIDE:-1}"
 export TF_FORCE_GPU_ALLOW_GROWTH="${TF_FORCE_GPU_ALLOW_GROWTH:-true}"
-export TF_GPU_ALLOCATOR="${TF_GPU_ALLOCATOR:-cuda_malloc_async}"
+# Leave TF_GPU_ALLOCATOR unset by default for Blackwell stability
 
 if run_attempt "Attempt 1/2: GPU training (allow_growth + cuda_malloc_async)" ; then
   echo "✅ Training complete (GPU path)."
