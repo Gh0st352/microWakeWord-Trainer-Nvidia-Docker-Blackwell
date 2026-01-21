@@ -52,6 +52,27 @@ Open your browser and go to:
 
 👉 **http://localhost:8888**
 
+---
+
+### ✅ One-time Python setup inside the container (required)
+
+The training scripts rely on a Python virtual environment in `/data/.venv`. You must create it once **inside** the running container (the image does not pre-install Python deps).
+
+```bash
+# inside the container shell
+cli/setup_python_venv --gpu --data-dir /data
+```
+
+This installs TensorFlow, `keras`, and the **legacy tf.keras shim** (`tf_keras`) required when `TF_USE_LEGACY_KERAS` is set.
+
+#### Verify setup
+
+After the setup completes, start training again. The log should pass the imports and proceed to model training without:
+
+```
+ImportError: Keras cannot be imported. Check that it is installed.
+```
+
 You’ll see the **microWakeWord Recorder & Trainer UI**.
 
 ---
@@ -118,6 +139,26 @@ You **will NOT need to download these again** unless you delete `/data`.
 - You do **NOT** need to clear any folders between runs
 - Old models are preserved in timestamped output directories
 - All required cleanup and reuse logic is handled automatically
+
+---
+
+## 🧩 Troubleshooting
+
+### Error: `Keras cannot be imported` / `TF_USE_LEGACY_KERAS` warning
+
+If training fails with:
+
+```
+ImportError: Keras cannot be imported. Check that it is installed.
+```
+
+Run the one-time Python setup inside the container:
+
+```bash
+cli/setup_python_venv --gpu --data-dir /data
+```
+
+This installs the missing `tf_keras` package required by TensorFlow when legacy `tf.keras` is enabled.
 
 ---
 

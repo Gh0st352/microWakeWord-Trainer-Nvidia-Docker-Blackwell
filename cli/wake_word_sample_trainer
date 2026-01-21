@@ -51,6 +51,23 @@ fi
 # shellcheck source=/dev/null
 source "${DATA_DIR}/.venv/bin/activate"
 
+check_tf_keras() {
+    python - <<'PY'
+import importlib.util
+import os
+import sys
+
+val = os.environ.get("TF_USE_LEGACY_KERAS", "")
+if val.lower() in ("1", "true", "yes", "y"):
+    if importlib.util.find_spec("tf_keras") is None:
+        sys.stderr.write(
+            "ERROR: TF_USE_LEGACY_KERAS is set but tf_keras is not installed. "
+            "Run cli/setup_python_venv inside the container to install tf_keras.\n"
+        )
+        sys.exit(1)
+PY
+}
+
 check_directories() {
     for d in "$@" ; do
         [ -d "$d" ] || { echo "ERROR: Directory $d not found" >&2 ; exit 1 ; }
@@ -59,6 +76,8 @@ check_directories() {
 
 check_directories ${WORK_DIR}/wake_word_samples_augmented \
     ${TRAINING_DS}/negative_datasets/{speech,dinner_party,no_speech,dinner_party_eval}
+
+check_tf_keras
 
 # Personal features are optional, but if present they MUST have /training
 PERSONAL_FEATURES_DIR="${WORK_DIR}/personal_augmented_features"
