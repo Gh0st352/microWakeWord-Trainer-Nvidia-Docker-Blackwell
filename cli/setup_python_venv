@@ -126,10 +126,14 @@ echo "   ===== Installing common requirements ====="
 # requirements.txt lives in repo root now
 pip_install -r "${ROOTDIR}/requirements.txt"
 
-${GPU} && tfgpu='[and-cuda]' || tfgpu=""
-echo "   ===== Installing Tensorflow${tfgpu} ====="
-pip_install ai_edge_litert "tensorflow${tfgpu}==2.20.0" "tensorboard==2.20.0" \
-    "tensorboard-data-server==0.7.2"
+ if ${GPU} ; then
+     echo "   ===== Using NGC TensorFlow base (skip TF install) ====="
+ else
+     tfgpu=""
+     echo "   ===== Installing Tensorflow${tfgpu} ====="
+     pip_install ai_edge_litert "tensorflow${tfgpu}==2.20.0" "tensorboard==2.20.0" \
+         "tensorboard-data-server==0.7.2"
+ fi
 
  TORCH_CUDA_TAG="${TORCH_CUDA_TAG:-cu130}"
  echo "   ===== Installing torch and torchaudio ${GPU:+[cuda]} ====="

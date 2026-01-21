@@ -16,7 +16,7 @@ No Jupyter notebooks required. No manual cell execution. Just record your voice 
 This repository is patched for **NVIDIA Blackwell** GPUs and expects:
 
 - **NVIDIA Driver:** 580.95.05+ (CUDA 13.0 capable)
-- **CUDA Toolkit (container):** 13.0 (installed from NVIDIA repo)
+- **Base container:** `nvcr.io/nvidia/tensorflow:25.02-tf2-py3` (NGC TensorFlow w/ Blackwell support)
 - **Host runtime:** NVIDIA Container Toolkit (`--gpus all`)
 
 If your host driver is older, update it before running the container.

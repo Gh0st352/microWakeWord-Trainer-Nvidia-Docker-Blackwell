@@ -1,29 +1,11 @@
-# Base
-FROM ubuntu:24.04
-
-ENV DEBIAN_FRONTEND=noninteractive
+# Base (NGC TensorFlow for Blackwell support)
+FROM nvcr.io/nvidia/tensorflow:25.02-tf2-py3
 
 # System deps
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    python3.12 python3.12-venv python3.12-dev python3-pip python-is-python3 \
     git wget curl unzip ca-certificates nano less \
-    gnupg2 lsb-release \
  && rm -rf /var/lib/apt/lists/* \
  && mkdir -p /data
-
-# CUDA 13.0 toolkit (Blackwell-compatible) from NVIDIA repo
-RUN curl -fsSL \
-      https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2404/x86_64/cuda-keyring_1.1-1_all.deb \
-      -o /tmp/cuda-keyring.deb \
- && dpkg -i /tmp/cuda-keyring.deb \
- && rm -f /tmp/cuda-keyring.deb \
- && apt-get update \
- && apt-get install -y --no-install-recommends cuda-toolkit-13-0 \
- && rm -rf /var/lib/apt/lists/*
-
-ENV CUDA_HOME=/usr/local/cuda
-ENV PATH="/usr/local/cuda/bin:${PATH}"
-ENV LD_LIBRARY_PATH=/usr/local/cuda/lib64
 
 # Recorder port
 EXPOSE 8789
