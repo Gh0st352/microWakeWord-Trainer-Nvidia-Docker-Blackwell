@@ -160,6 +160,19 @@ cli/setup_python_venv --gpu --data-dir /data
 
 This installs the missing `tf_keras` package required by TensorFlow when legacy `tf.keras` is enabled.
 
+### Error: `AttributeError: module 'tf_keras.api._v2.keras' has no attribute 'ops'`
+
+This indicates **legacy tf.keras** is being used, which does **not** include `tf.keras.ops`.
+In this container, training expects **Keras 3**. Ensure legacy mode is disabled:
+
+```bash
+export TF_USE_LEGACY_KERAS=0
+export KERAS_BACKEND=tensorflow
+```
+
+Then re-run training. The scripts now set these for you, but the environment
+variables above should override any inherited legacy settings.
+
 ---
 
 ## 📦 Output Files

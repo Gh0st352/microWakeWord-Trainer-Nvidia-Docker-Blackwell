@@ -68,6 +68,8 @@ echo
 START_TS=$EPOCHSECONDS
 
 export TF_CPP_MIN_LOG_LEVEL=9
+export TF_USE_LEGACY_KERAS=0
+export KERAS_BACKEND=tensorflow
 export TF_FORCE_GPU_ALLOW_GROWTH=true
 # Leave TF_GPU_ALLOCATOR unset by default for Blackwell stability
 unset TF_GPU_ALLOCATOR
