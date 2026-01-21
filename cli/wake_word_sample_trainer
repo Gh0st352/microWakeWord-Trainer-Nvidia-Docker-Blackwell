@@ -230,8 +230,9 @@ export TF_XLA_FLAGS="${TF_XLA_FLAGS:+${TF_XLA_FLAGS} }${DEFAULT_XLA_FLAGS}"
 export NVIDIA_TF32_OVERRIDE="${NVIDIA_TF32_OVERRIDE:-1}"
 export TF_FORCE_GPU_ALLOW_GROWTH="${TF_FORCE_GPU_ALLOW_GROWTH:-true}"
 # Leave TF_GPU_ALLOCATOR unset by default for Blackwell stability
+unset TF_GPU_ALLOCATOR
 
-if run_attempt "Attempt 1/2: GPU training (allow_growth + cuda_malloc_async)" ; then
+if run_attempt "Attempt 1/2: GPU training (allow_growth)" ; then
   echo "✅ Training complete (GPU path)."
 else
   echo "⚠️  GPU attempt failed. Falling back to CPU."
