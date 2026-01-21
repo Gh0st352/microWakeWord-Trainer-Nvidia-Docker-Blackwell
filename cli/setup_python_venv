@@ -131,9 +131,25 @@ echo "   ===== Installing Tensorflow${tfgpu} ====="
 pip_install ai_edge_litert "tensorflow${tfgpu}==2.20.0" "tensorboard==2.20.0" \
     "tensorboard-data-server==0.7.2"
 
-${GPU} && torchgpu='--index-url https://download.pytorch.org/whl/cu129' || torchgpu=""
-echo "   ===== Installing torch and torchaudio ${torchgpu:+[cuda]} ====="
-pip_install "torch==2.9.1" "torchaudio==2.9.1" ${torchgpu}
+ TORCH_CUDA_TAG="${TORCH_CUDA_TAG:-cu130}"
+ echo "   ===== Installing torch and torchaudio ${GPU:+[cuda]} ====="
+ if ${GPU} ; then
+     # Try CUDA 13.0 wheels first for Blackwell; fallback to older CUDA wheels if needed.
+     TORCH_INDEX_URLS=(
+         "https://download.pytorch.org/whl/${TORCH_CUDA_TAG}"
+         "https://download.pytorch.org/whl/cu129"
+     )
+     torch_installed=false
+     for url in "${TORCH_INDEX_URLS[@]}" ; do
+         if pip_install "torch==2.9.1" "torchaudio==2.9.1" --index-url "${url}" ; then
+             torch_installed=true
+             break
+         fi
+     done
+     ${torch_installed} || { echo "ERROR: torch install failed for all CUDA indexes" >&2 ; exit 1 ; }
+ else
+     pip_install "torch==2.9.1" "torchaudio==2.9.1"
+ fi
 
 echo "   ===== Checking microwakeword ====="
 MWW="${DATA_DIR}/tools/microWakeWord"
@@ -170,9 +186,9 @@ if [ ! -f "${MODEL_FILE}.json" ] ; then
     curl -sfL "${MODEL_URL}.json" -o "${MODEL_FILE}.json"
 fi
 
-${GPU} && onnxgpu='-gpu[cuda]' || onnxgpu=""
-echo "   ===== Installing onnxruntime${onnxgpu} ====="
-pip_install "onnxruntime${onnxgpu}>=1.16.0"
+ ${GPU} && onnxgpu='-gpu[cuda]' || onnxgpu=""
+ echo "   ===== Installing onnxruntime${onnxgpu} ====="
+ pip_install "onnxruntime${onnxgpu}>=1.19.0"
 
 echo "   ===== Installing keras ====="
 # keras 3.13 has "issues" so we need to back down to 3.12.

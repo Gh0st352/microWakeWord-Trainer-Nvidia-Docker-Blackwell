@@ -11,6 +11,16 @@ No Jupyter notebooks required. No manual cell execution. Just record your voice 
 
 ## 🚀 Quick Start
 
+### ✅ NVIDIA Blackwell Compatibility (Driver + CUDA)
+
+This repository is patched for **NVIDIA Blackwell** GPUs and expects:
+
+- **NVIDIA Driver:** 580.95.05+ (CUDA 13.0 capable)
+- **CUDA Toolkit (container):** 13.0 (installed from NVIDIA repo)
+- **Host runtime:** NVIDIA Container Toolkit (`--gpus all`)
+
+If your host driver is older, update it before running the container.
+
 ### 1️⃣ Pull the Docker Image
 
 ```bash
