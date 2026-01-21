@@ -128,6 +128,7 @@ pip_install -r "${ROOTDIR}/requirements.txt"
 
  if ${GPU} ; then
      echo "   ===== Using NGC TensorFlow base (skip TF install) ====="
+     pip_install "tf_keras==2.20.0"
  else
      tfgpu=""
      echo "   ===== Installing Tensorflow${tfgpu} ====="
@@ -194,9 +195,9 @@ fi
  echo "   ===== Installing onnxruntime${onnxgpu} ====="
  pip_install "onnxruntime${onnxgpu}>=1.19.0"
 
-echo "   ===== Installing keras ====="
-# keras 3.13 has "issues" so we need to back down to 3.12.
-pip_install "keras==3.12.0"
+ echo "   ===== Installing keras ====="
+ # keras 3.13 has "issues" so we need to back down to 3.12.
+ pip_install "keras==3.12.0"
 
 CUDA_DATA_DIR="${DATA_DIR}/cuda"
 LIBDEVICE_DIR="${CUDA_DATA_DIR}/nvvm/libdevice"
