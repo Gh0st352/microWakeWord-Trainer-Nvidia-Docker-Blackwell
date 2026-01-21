@@ -4,6 +4,7 @@ FROM nvcr.io/nvidia/tensorflow:25.02-tf2-py3
 # System deps
 RUN apt-get update && apt-get install -y --no-install-recommends \
     git wget curl unzip ca-certificates nano less \
+    python3.12-venv \
  && rm -rf /var/lib/apt/lists/* \
  && mkdir -p /data
 
