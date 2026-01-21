@@ -118,7 +118,7 @@ fi
 
 END_TS=$EPOCHSECONDS
 
-python -c $'print(f"{\'=\' * 80}")'
+python -c $'print(f"{\'\=\' * 80}")'
 printf "%44s\n\n" "Training Summary"
 "${CLIDIR}/system_summary"
 echo
@@ -127,4 +127,4 @@ print_elapsed_time --no-separators "${POST_GEN_TS}" "${POST_AUGMENT_TS}" "Augmen
 print_elapsed_time --no-separators "${POST_AUGMENT_TS}" "${END_TS}" "${TRAINING_STEPS} training steps"
 python -c $'msg="="*54 ; print(f"{msg:>80s}")'
 print_elapsed_time --no-separators "${START_TS}" "${END_TS}" "Total"
-python -c $'print(f"{\'=\' * 80}")'
+python -c $'print(f"{\'\=\' * 80}")'
